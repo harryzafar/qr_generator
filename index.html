@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Generator</title>
+</head>
+<style>
+    .qrcode img{
+        padding: 10px;
+        border-radius: 10px;
+        border: 1px solid #eee;
+    }
+</style>
+<body>
+    <h2>QR Code Generator</h2>
+    <!-- method 1 start -->
+    <img src="https://chart.googleapis.com/chart?cht=qr&chs=100x100&chl=hello_world" alt="">
+    <!-- method 1 stop -->
+
+
+    <!-- method 2 start -->
+    <div>
+        <input type="text" id="qr_text">
+        <select name="" id="select_code_size">
+            <option value="100">100x100</option>
+            <option value="200">200x200</option>
+            <option value="300">300x300</option>
+            <option value="400">400x400</option>
+            <option value="500">500x500</option>
+        </select>
+        <button id="code_generator">Generate</button>
+        <a href="" id="code_downloader" download >Download</a>
+    </div>
+    <div class="qrcode" id="qrcode">
+
+    </div>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" integrity="sha512-CNgIRecGo7nphbeZ04Sc13ka07paqdeTu0WR1IM4kNcpmBAUSHSQX0FslNhTDadL4O5SAGapGt4FodqL8My0mA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        let input_url = document.getElementById('qr_text');
+        let code_size = document.getElementById('select_code_size');
+        let generate_btn = document.getElementById('code_generator');
+        let download_btn = document.getElementById('code_downloader');
+
+        let qr_code = document.getElementById('qrcode');
+
+        function generate_code() {
+            var qrcode = new QRCode(qr_code, {
+                text: input_url.value,
+                width: code_size.value,
+                height: code_size.value,
+                colorDark: "#000000",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+        }
+
+        generate_btn.addEventListener('click', function () {
+            generate_code();
+        })
+        download_btn.addEventListener('click', function(e){
+           
+            let img_src = document.querySelector('#qrcode img').getAttribute('src')
+            download_btn.setAttribute('href', img_src);
+            console.log(img_src);
+        })
+    </script>
+
+    <!-- method 2 stop -->
+</body>
+
+</html>
